@@ -7,6 +7,7 @@ import spinup.algos.pytorch.ppo.core as core
 from spinup.utils.logx import EpochLogger
 from spinup.utils.mpi_pytorch import setup_pytorch_for_mpi, sync_params, mpi_avg_grads
 from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
+from spinup.envs.circuit_breaker import CircuitBreaker
 
 
 class PPOBuffer:
@@ -204,7 +205,6 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     torch.manual_seed(seed)
     np.random.seed(seed)
 
-    # Instantiate environment
     env = env_fn()
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
@@ -216,7 +216,8 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     sync_params(ac)
 
     # Count variables
-    var_counts = tuple(core.count_vars(module) for module in [ac.pi, ac.v])
+    import math
+    var_counts = tuple(core.count_vars(module) for module in [math.pi, ac.v])
     logger.log('\nNumber of parameters: \t pi: %d, \t v: %d\n'%var_counts)
 
     # Set up experience buffer

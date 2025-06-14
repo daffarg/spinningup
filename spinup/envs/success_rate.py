@@ -3,11 +3,10 @@ from datetime import datetime
 from concurrent.futures import ProcessPoolExecutor
 
 def fetch_jaeger_traces():
-    """Mengambil data trace dari Jaeger API dalam 15 detik terakhir."""
-    end_time = int(datetime.now().timestamp() * 1e6)  # Convert ke microseconds
-    start_time = int(end_time - (15 * 1e6))  # 15 detik sebelumnya
+    end_time = 1745986563  # Convert ke microseconds
+    start_time = 1745985234
 
-    jaeger_url = "http://localhost:16686/jaeger/api/traces"
+    jaeger_url = "http://192.168.49.2:30095/jaeger/api/traces"
     params = {
         "service": "productpage.default",
         "start": str(start_time),

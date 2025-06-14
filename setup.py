@@ -14,6 +14,8 @@ setup(
     py_modules=['spinup'],
     version=__version__,#'0.1',
     install_requires=[
+        'opencv-python==4.6.*',
+        'opencv-python-headless==4.6.*',
         'cloudpickle==1.2.1',
         'gym[atari,box2d,classic_control]~=0.15.3',
         'ipython',
@@ -27,7 +29,7 @@ setup(
         'scipy',
         'seaborn==0.8.1',
         'tensorflow>=1.8.0,<2.0',
-        'torch==1.3.1',
+        'torch',
         'tqdm'
     ],
     description="Teaching tools for introducing people to deep RL.",
